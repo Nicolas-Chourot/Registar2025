@@ -39,6 +39,13 @@ namespace JsonDemo.Models
                 return SelectListUtilities<Course>.Convert(ToList().Where(c => c.IsNextSession), "Caption");
             }
         }
-
+        [JsonIgnore]
+        public SelectList NextSessionUnAllocatedToSelectList
+        {
+            get
+            {
+                return SelectListUtilities<Course>.Convert(ToList().Where(c => c.IsNextSession && !c.IsAllocated(NextSession.Year)), "Caption");
+            }
+        }
     }
 }

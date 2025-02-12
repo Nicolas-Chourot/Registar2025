@@ -18,10 +18,12 @@
     @foreach (int year in yearsList)
     {
         var registrations = Model.Registrations.Where(r => r.Year == year).OrderBy(r => r.Student.LastName).ThenBy(r => r.Student.FirstName);
+        var allocation = JsonDemo.Models.DB.Allocations.ToList().Where(a => a.CourseId == Model.Id && a.Year == year).FirstOrDefault();
+        string teacherName = allocation != null ? allocation.Teacher.Caption : "non attribué";
         if (registrations.Count() > 0)
         {
             <details open>
-                <summary>Cohorte @year</summary>
+                <summary>Cohorte @year - @teacherName</summary>
                 @foreach (var registration in registrations)
                 {
                     <div class="StudentListLayout ellipsis">

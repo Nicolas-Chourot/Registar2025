@@ -1,0 +1,43 @@
+﻿
+@model JsonDemo.Models.Teacher
+
+@{
+    ViewBag.Title = "Details";
+    var yearsList = ((List<int>)Session["StudentsYearsList"]).OrderByDescending(i => i);
+}
+<h3> <b> @Model.FirstName @Model.LastName</b> </h3>
+<h5>Date d'embauche : @Html.DisplayFor(m=>m.StartDate)</h5>
+<h5>Années de sevice : @Model.YearsOfService</h5>
+<h5>Code   : @Model.Code</h5>
+<h5>Téléphone : @Model.Phone</b></h5>
+<h5>Courriel : <a href="mailto:@Model.Email">@Model.Email</a> </h5>
+
+    <hr />
+
+    <div>
+        <h4>Allocations</h4>
+        @foreach (int year in yearsList)
+        {
+            var allocations = Model.Allocations.Where(a => a.Year == year).OrderBy(a => a.Course.Code);
+            if (allocations.Count() > 0)
+            {
+                <details open>
+                    <summary>@year</summary>
+                    @foreach (var allocation in allocations)
+                    {
+                        <div class="CourseListLayout ellipsis">
+                            <a href="@Url.Action("Details", "Courses", new { id = allocation.Course.Id })">
+                                <span class="courseCode">@allocation.Course.Code</span>
+                                @allocation.Course.Title
+                            </a>
+                        </div>
+                    }
+                </details>
+            }
+        }
+
+
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

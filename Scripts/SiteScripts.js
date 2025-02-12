@@ -1,12 +1,12 @@
 ﻿$(document).ready(function () {
     $('.phone').mask('(999) 999-9999');
-    $('.phone-ext').mask('(999) 999-9999 poste 99999');
+    $('.phoneExt').mask('(999) 999-9999 poste 99999');
     $('.zipcode').mask('a9a 9a9');
     $(".datepicker").datepicker({
         dateFormat: 'yy-mm-dd',
         changeMonth: true,
         changeYear: true,
-        yearRange: "-100:-15",
+        //yearRange: "-100:-15",
         dayNamesMin: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
         monthNamesShort: ["Janv.", "Févr.", "Mars", "Avril", "Mai", "Juin", "Juil.", "Août", "Sept.", "Oct.", "Nov.", "Déc."]
     });

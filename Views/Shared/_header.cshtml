@@ -10,21 +10,29 @@
     @switch (action)
     {
         case "index":
-            if (controller == "students")
+            switch (controller)
             {
-                <div class="actionTitle">
-                    <b>Étudiants</b> |
-                    <a href="/Courses/index" class="unselected" title="Voir la liste des cours">Cours</a> |
-                    <a href="/Teachers/index" class="unselected" title="Voir la liste des enseignants">Profs</a>
-                </div>
-            }
-            else
-            {
-                <div class="actionTitle">
-                    <a href="/Students/index" class="unselected" title="Voir la liste des étudiants">Étudiants</a> |
-                    <b>Cours</b> |
-                    <a href="/Teachers/index" class="unselected" title="Voir la liste des enseignants">Profs</a>
-                </div>
+                case "students":
+                    <div class="actionTitle">
+                        <b>Étudiants</b> |
+                        <a href="/Courses/index" class="unselected" title="Voir la liste des cours">Cours</a> |
+                        <a href="/Teachers/index" class="unselected" title="Voir la liste des enseignants">Profs</a>
+                    </div>
+                    break;
+                case "courses":
+                    <div class="actionTitle">
+                        <a href="/Students/index" class="unselected" title="Voir la liste des étudiants">Étudiants</a> |
+                        <b>Cours</b> |
+                        <a href="/Teachers/index" class="unselected" title="Voir la liste des enseignants">Profs</a>
+                    </div>
+                    break;
+                case "teachers":
+                    <div class="actionTitle">
+                        <a href="/Students/index" class="unselected" title="Voir la liste des étudiants">Étudiants</a> |
+                        <a href="/Courses/index" class="unselected" title="Voir la liste des cours">Cours</a> |
+                        <b>Profs</b>
+                    </div>
+                    break;
             }
             <div class="menu-icon-layout">
                 <a href="/@controller/Create" class="cmdIcon fa fa-plus" title="Ajouter un @dataModel"></a>

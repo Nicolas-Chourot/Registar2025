@@ -14,7 +14,7 @@ namespace JsonDemo.Models
         public int CourseId { get; set; }
         public int Year { get; set; }
         [JsonIgnore] public Course Course { get { return DB.Courses.Get(CourseId); } }
-        [JsonIgnore] public Student Teacher { get { return DB.Students.Get(TeacherId); } }
+        [JsonIgnore] public Teacher Teacher { get { return DB.Teachers.Get(TeacherId); } }
         [JsonIgnore]
         public bool IsNextSession
         {

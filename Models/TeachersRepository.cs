@@ -12,7 +12,7 @@ namespace JsonDemo.Models
         {
             BeginTransaction();
             var result = base.Update(teacher);
-            if (result) teacher.UpdateRegistrations(selectedCoursesId);
+            if (result) teacher.UpdateAllocations(selectedCoursesId);
             EndTransaction();
             return result;
         }

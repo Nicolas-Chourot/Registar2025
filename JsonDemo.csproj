@@ -152,6 +152,8 @@
     <Content Include="App_Data\Registrations.json" />
     <Content Include="App_Data\Students.json" />
     <Content Include="App_Code\Helper.cshtml" />
+    <Content Include="App_Data\Allocations.json" />
+    <Content Include="App_Data\Teachers.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\imageUploader.js" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
@@ -185,22 +187,23 @@
     <Content Include="Views\Students\Details.cshtml" />
     <Content Include="Views\Students\Create.cshtml" />
     <Content Include="Views\Students\Edit.cshtml" />
-    <Content Include="Views\Students\Delete.cshtml" />
     <Content Include="Views\Courses\Index.cshtml" />
     <Content Include="Views\Courses\Details.cshtml" />
     <Content Include="Views\Courses\Create.cshtml" />
     <Content Include="Views\Courses\Edit.cshtml" />
-    <Content Include="Views\Courses\Delete.cshtml" />
     <Content Include="Views\Students\StudentForm.cshtml" />
     <Content Include="Views\Courses\CourseForm.cshtml" />
     <Content Include="Views\Shared\_header.cshtml" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.1.min.map" />
     <Content Include="Views\Shared\_search.cshtml" />
+    <Content Include="Views\Teachers\Create.cshtml" />
+    <Content Include="Views\Teachers\Details.cshtml" />
+    <Content Include="Views\Teachers\Edit.cshtml" />
+    <Content Include="Views\Teachers\Index.cshtml" />
+    <Content Include="Views\Teachers\TeacherForm.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Teachers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

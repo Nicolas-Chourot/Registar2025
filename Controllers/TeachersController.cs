@@ -37,7 +37,7 @@ namespace JsonDemo.Controllers
             InitSessionVariables();
 
             string searchName = ((string)Session["SearchTeacherName"]).ToLower();
-            var teachers = DB.Students.ToList().OrderBy(m => m.LastName).ThenBy(m => m.FirstName).ToList();
+            var teachers = DB.Teachers.ToList().OrderBy(m => m.LastName).ThenBy(m => m.FirstName).ToList();
 
             if ((bool)Session["ShowTeachersSearch"])
             {
@@ -81,7 +81,7 @@ namespace JsonDemo.Controllers
             {
                 ViewBag.Allocations = teacher.NextSessionCoursesToSelectList;
                 // Todo prevent from allocatation of 2 teachers on at the same next session course
-                ViewBag.Courses = DB.Courses.NextSessionToSelectList;
+                ViewBag.Courses = DB.Courses.NextSessionUnAllocatedToSelectList;
                 return View(DB.Teachers.Get(id));
             }
             return RedirectToAction("Index");
@@ -95,10 +95,11 @@ namespace JsonDemo.Controllers
                 teacher.Code = (string)Session["code"];
                 DB.Teachers.Update(teacher, selectedCoursesId);
                 return RedirectToAction("Details", new { id = teacher.Id });
+
             }
             ViewBag.Allocations = teacher.NextSessionCoursesToSelectList;
             // Todo prevent from allocatation of 2 teachers on at the same next session course
-            ViewBag.Courses = DB.Courses.NextSessionToSelectList;
+            ViewBag.Courses = DB.Courses.NextSessionUnAllocatedToSelectList;
             return View(teacher);
         }
         public ActionResult Delete()

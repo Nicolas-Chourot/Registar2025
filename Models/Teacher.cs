@@ -40,6 +40,16 @@ namespace JsonDemo.Models
 
         [Display(Name = "Téléphone"), Required(ErrorMessage = "Obligatoire")]
         public string Phone { get; set; }
+        [JsonIgnore]
+        public double YearsOfService
+        {
+            get
+            {
+                double now = DateTime.Now.Year + Math.Round(DateTime.Now.Month / 12.0 * 10.0) / 10.0;
+                double sdt = StartDate.Year + Math.Round(DateTime.Now.Month / 12.0 * 10.0) / 10.0;
+                return now - sdt;
+            }
+        }
 
         [JsonIgnore]
         public string Caption
@@ -64,7 +74,7 @@ namespace JsonDemo.Models
         {
             get
             {
-                return DB.Allocations.ToList().Where(r => r.TeacherId == Id && r.IsNextSession).ToList();
+                return DB.Allocations.ToList().Where(a => a.TeacherId == Id && a.IsNextSession).ToList();
             }
         }
         [JsonIgnore]
@@ -86,10 +96,9 @@ namespace JsonDemo.Models
             get
             {
                 var courses = new List<Course>();
-                foreach (var registration in NextSessionAllocations.OrderBy(r => r.Course.Code))
+                foreach (var allocation in NextSessionAllocations.OrderBy(r => r.Course.Code))
                 {
-                    if (!registration.Course.IsAllocated(registration.Year))
-                        courses.Add(registration.Course);
+                        courses.Add(allocation.Course);
                 }
                 return courses;
             }
@@ -122,9 +131,8 @@ namespace JsonDemo.Models
             if (selectedCoursesId != null)
                 foreach (int courseId in selectedCoursesId)
                 {
-                    DB.Registrations.Add(new Registration { StudentId = Id, CourseId = courseId });
+                    DB.Allocations.Add(new Allocation { TeacherId = Id, CourseId = courseId });
                 }
         }
     }
-}
 }
