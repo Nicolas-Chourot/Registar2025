@@ -49,6 +49,10 @@ namespace JsonDemo.Models
                 return students;
             }
         }
+        public bool IsAllocated(int year)
+        {
+            return DB.Allocations.ToList().Where(a => a.Year == year && a.CourseId == Id).Any(); 
+        }
         public void DeleteAllRegistrations()
         {
             foreach (Registration registration in Registrations)

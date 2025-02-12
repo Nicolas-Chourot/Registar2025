@@ -88,7 +88,8 @@ namespace JsonDemo.Models
                 var courses = new List<Course>();
                 foreach (var registration in NextSessionAllocations.OrderBy(r => r.Course.Code))
                 {
-                    courses.Add(registration.Course);
+                    if (!registration.Course.IsAllocated(registration.Year))
+                        courses.Add(registration.Course);
                 }
                 return courses;
             }
@@ -115,7 +116,7 @@ namespace JsonDemo.Models
             foreach (Allocation allocation in NextSessionAllocations)
                 DB.Allocations.Delete(allocation.Id);
         }
-        public void UpdateRegistrations(List<int> selectedCoursesId)
+        public void UpdateAllocations(List<int> selectedCoursesId)
         {
             DeleteNextSessionAllocations();
             if (selectedCoursesId != null)
