@@ -4,7 +4,6 @@
 @{
     bool creating = Model.Id == 0;
     string submitCaption = creating ? "Ajouter" : "Modifier";
-    int currentYear = DateTime.Now.Year;
     string session = "Inscriptions à la " + JsonDemo.Models.NextSession.Caption;
 }
 @using (Html.BeginForm())

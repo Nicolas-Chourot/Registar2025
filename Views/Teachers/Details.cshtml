@@ -7,7 +7,7 @@
 }
 <h3> <b> @Model.FirstName @Model.LastName</b> </h3>
 <h5>Date d'embauche : @Html.DisplayFor(m=>m.StartDate)</h5>
-<h5>Années de sevice : @Model.YearsOfService</h5>
+<h5>Années de sevice : @Model.YearsOfService.ToString("n1")</h5>
 <h5>Code   : @Model.Code</h5>
 <h5>Téléphone : @Model.Phone</b></h5>
 <h5>Courriel : <a href="mailto:@Model.Email">@Model.Email</a> </h5>

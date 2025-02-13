@@ -1,9 +1,11 @@
 ﻿using JSON_DAL;
+using System;
 
 namespace JsonDemo.Models
 {
     public sealed class DB
     {
+        public static DateTime CurrentDate = new DateTime(2022, 7, 15);
         #region singleton setup
         private static readonly DB instance = new DB();
         public static DB Instance { 
