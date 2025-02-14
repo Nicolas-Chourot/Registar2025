@@ -5,39 +5,47 @@
     ViewBag.Title = "Details";
     var yearsList = ((List<int>)Session["StudentsYearsList"]).OrderByDescending(i => i);
 }
-<h3> <b> @Model.FirstName @Model.LastName</b> </h3>
-<h5>Date d'embauche : @Html.DisplayFor(m=>m.StartDate)</h5>
-<h5>Années de sevice : @Model.YearsOfService.ToString("n1")</h5>
-<h5>Code   : @Model.Code</h5>
-<h5>Téléphone : @Model.Phone</b></h5>
-<h5>Courriel : <a href="mailto:@Model.Email">@Model.Email</a> </h5>
 
-    <hr />
+<details>
+    <summary><i class="infoIcon fa-solid fa-chalkboard-user"></i> <b> @Model.FirstName @Model.LastName</b> </summary>
+    <br />
+    <h6><i class="infoIcon fa fa-barcode"></i> @Model.Code</h6>
+    <h6><i class="infoIcon fa fa-phone"></i> @Model.Phone</h6>
+    <h6><i class="infoIcon fa fa-paper-plane"></i> <a href="mailto:@Model.Email">@Model.Email</a> </h6>
+    <br />
+    <h6>Embauché le @Model.StartDate.ToLongDateString()</h6>
+    <h6>@Model.YearsOfService.ToString("n1") ans d'ancienneté</h6>
+</details>
 
-    <div>
-        <h4>Allocations</h4>
-        @foreach (int year in yearsList)
+
+
+
+<hr />
+
+<div>
+    <h4>Allocations</h4>
+    @foreach (int year in yearsList)
+    {
+        var allocations = Model.Allocations.Where(a => a.Year == year).OrderBy(a => a.Course.Code);
+        if (allocations.Count() > 0)
         {
-            var allocations = Model.Allocations.Where(a => a.Year == year).OrderBy(a => a.Course.Code);
-            if (allocations.Count() > 0)
-            {
-                <details open>
-                    <summary>@year</summary>
-                    @foreach (var allocation in allocations)
-                    {
-                        <div class="CourseListLayout ellipsis">
-                            <a href="@Url.Action("Details", "Courses", new { id = allocation.Course.Id })">
-                                <span class="courseCode">@allocation.Course.Code</span>
-                                @allocation.Course.Title
-                            </a>
-                        </div>
-                    }
-                </details>
-            }
+            <details open>
+                <summary>@year</summary>
+                @foreach (var allocation in allocations)
+                {
+                    <div class="CoursesListLayout ellipsis">
+                        <a href="@Url.Action("Details", "Courses", new { id = allocation.Course.Id })">
+                            <span class="courseCode">@allocation.Course.Code</span>
+                            @allocation.Course.Title
+                        </a>
+                    </div>
+                }
+            </details>
         }
-
-
-    </div>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
     }
+
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -14,7 +14,7 @@
             <summary>Session @session</summary>
             @foreach (var course in courses)
             {
-                <div class="CourseListLayout ellipsis">
+                <div class="CoursesListLayout ellipsis">
                     <a href="@Url.Action("Details", new { id = course.Id })" class="ellipsis">
                         <div class="ellipsis">
                             <span class="courseCode">@course.Code</span>

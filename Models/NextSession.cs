@@ -27,17 +27,19 @@ namespace JsonDemo.Models
             get
             {
                 List<int> result = new List<int>();
-                if (DB.CurrentDate.Month > August)
-                {
-                    result.Add(2);
-                    result.Add(4);
-                    result.Add(6);
-                }
-                if (DB.CurrentDate.Month > January)
+                if (DB.CurrentDate.Month > January && 
+                    DB.CurrentDate.Month <= August)
                 {
                     result.Add(1);
                     result.Add(3);
                     result.Add(5);
+
+                }
+                else
+                {
+                    result.Add(2);
+                    result.Add(4);
+                    result.Add(6);
                 }
                 return result;
             }
@@ -47,7 +49,8 @@ namespace JsonDemo.Models
             get
             {
                 int value = DB.CurrentDate.Year;
-                if (DB.CurrentDate.Month > August) value++;
+                if (DB.CurrentDate.Month > August && 
+                    DB.CurrentDate.Month <= 12) value++;
                 return value;
             }
         }

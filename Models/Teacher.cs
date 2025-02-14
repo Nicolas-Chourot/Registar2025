@@ -50,7 +50,11 @@ namespace JsonDemo.Models
                 return now - sdt;
             }
         }
-
+        [JsonIgnore]
+        public string FullName
+        {
+            get { return LastName + " " + FirstName; }
+        }
         [JsonIgnore]
         public string Caption
         {

@@ -5,38 +5,42 @@
     ViewBag.Title = "Details";
     var yearsList = ((List<int>)Session["StudentsYearsList"]).OrderByDescending(i => i);
 }
-<h3> <b> @Model.FirstName @Model.LastName</b> </h3>
-<h5>Naissance : @Html.DisplayFor(m=>m.BirthDate)</h5>
-<h5>NAD : @Model.Code</h5>
-<h5>Téléphone : @Model.Phone</b></h5>
-<h5>Courriel : <a href="mailto:@Model.Email">@Model.Email</a> </h5>
+<details>
+    <summary><i class="infoIcon fa-solid fa-graduation-cap"></i> <b> @Model.FirstName @Model.LastName</b> </summary>
+    <br />
+    <h6><i class="infoIcon fa fa-barcode"></i> @Model.Code</h6>
+    <h6><i class="infoIcon fa fa-phone"></i> @Model.Phone</h6>
+    <h6><i class="infoIcon fa fa-paper-plane"></i> <a href="mailto:@Model.Email">@Model.Email</a> </h6>
 
-    <hr />
+    <h6><i class="infoIcon fa fa-cake-candles"></i> @Model.BirthDate.ToLongDateString()</h6>
+</details>
 
-    <div>
-        <h4>Inscriptions</h4>
-        @foreach (int year in yearsList)
+<hr />
+
+<div>
+    <h4>Inscriptions</h4>
+    @foreach (int year in yearsList)
+    {
+        var registrations = Model.Registrations.Where(r => r.Year == year).OrderBy(r => r.Course.Code);
+        if (registrations.Count() > 0)
         {
-            var registrations = Model.Registrations.Where(r => r.Year == year).OrderBy(r => r.Course.Code);
-            if (registrations.Count() > 0)
-            {
-                <details open>
-                    <summary>@year</summary>
-                    @foreach (var registration in registrations)
-                    {
-                        <div class="CourseListLayout ellipsis">
-                            <a href="@Url.Action("Details", "Courses", new { id = registration.Course.Id })">
-                                <span class="courseCode">@registration.Course.Code</span>
-                                @registration.Course.Title
-                            </a>
-                        </div>
-                    }
-                </details>
-            }
+            <details open>
+                <summary>@year</summary>
+                @foreach (var registration in registrations)
+                {
+                    <div class="CoursesListLayout ellipsis">
+                        <a href="@Url.Action("Details", "Courses", new { id = registration.Course.Id })">
+                            <span class="courseCode">@registration.Course.Code</span>
+                            @registration.Course.Title
+                        </a>
+                    </div>
+                }
+            </details>
         }
-
-
-    </div>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
     }
+
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

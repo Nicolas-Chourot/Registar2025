@@ -41,7 +41,12 @@ namespace JsonDemo.Models
 
         [Display(Name = "Téléphone"), Required(ErrorMessage = "Obligatoire")]
         public string Phone { get; set; }
-       
+
+        [JsonIgnore]
+        public string FullName
+        {
+            get { return LastName + " " + FirstName; }
+        }
         [JsonIgnore]
         public string Caption
         {

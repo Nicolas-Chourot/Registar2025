@@ -3,9 +3,15 @@
     string action = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString().ToLower();
     bool connected = Session["CurrentUser"] != null;
     string dataModel = controller == "students" ? "Étudiant" : "Cours";
-}
+    switch (controller)
+    {
+        case "students": dataModel = "Étudiant"; break;
+        case "courses": dataModel = "Cours"; break;
+        case "teachers": dataModel = "Prof"; break;
+    }
+    }
 <div id="header">
-    <img src="/Logo-Lionel-Groulx.png" class="appLogo" alt="" title="Gestionnaire de favoris">
+    <img src="/Logo-Lionel-Groulx.png" class="appLogo" alt="" title="Régistraire">
 
     @switch (action)
     {
@@ -14,22 +20,22 @@
             {
                 case "students":
                     <div class="actionTitle">
-                        <b>Étudiants</b> |
-                        <a href="/Courses/index" class="unselected" title="Voir la liste des cours">Cours</a> |
+                        <b>Étudiants</b>
+                        <a href="/Courses/index" class="unselected" title="Voir la liste des cours">Cours</a>
                         <a href="/Teachers/index" class="unselected" title="Voir la liste des enseignants">Profs</a>
                     </div>
                     break;
                 case "courses":
                     <div class="actionTitle">
-                        <a href="/Students/index" class="unselected" title="Voir la liste des étudiants">Étudiants</a> |
-                        <b>Cours</b> |
+                        <a href="/Students/index" class="unselected" title="Voir la liste des étudiants">Étudiants</a>
+                        <b>Cours</b>
                         <a href="/Teachers/index" class="unselected" title="Voir la liste des enseignants">Profs</a>
                     </div>
                     break;
                 case "teachers":
                     <div class="actionTitle">
-                        <a href="/Students/index" class="unselected" title="Voir la liste des étudiants">Étudiants</a> |
-                        <a href="/Courses/index" class="unselected" title="Voir la liste des cours">Cours</a> |
+                        <a href="/Students/index" class="unselected" title="Voir la liste des étudiants">Étudiants</a>
+                        <a href="/Courses/index" class="unselected" title="Voir la liste des cours">Cours</a>
                         <b>Profs</b>
                     </div>
                     break;
@@ -52,6 +58,11 @@
                             </div>
                         }
                         <div class="dropdown-divider"></div>
+                        <div class="dropdown-item">
+                            <a href="/Students/SetYear" class="noDecoration">
+                                <i class="menuIcon fa fa-calendar mx-2"></i> Année courante...
+                            </a>
+                        </div>
                         <div class="dropdown-item">
                             <a href="/Home/About" class="noDecoration">
                                 <i class="menuIcon fa fa-info-circle mx-2"></i> À propos...
@@ -86,10 +97,18 @@
                 <a href="/@controller/details/@Session["id"]" class="cmdIcon fa fa-times" title="Annuler"></a>
             </div>
             break;
+        case "setyear":
+            <div class="actionTitle">Année courrante </div>
+            <div class="menu-icon-layout">
+                <i class="cmdIcon submitCmd fa fa-check" title="Soumettre"></i>
+                <a href="/@controller/index" class="cmdIcon fa fa-times" title="Fermer"></a>
+            </div>
+            break;
+
         case "about":
             <div class="actionTitle">À propos </div>
             <div class="menu-icon-layout">
-                <a href="/Students/index" class="cmdIcon fa fa-times" title="Fermer"></a>
+                <a href="/@controller/index" class="cmdIcon fa fa-times" title="Fermer"></a>
             </div>
             break;
     }

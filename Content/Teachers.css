@@ -1,36 +1,34 @@
-﻿.CoursesListLayout {
-    height: 28px;
+﻿.TeacherListLayout {
+    display: grid;
+    grid-template-columns: auto auto;
+    height: 30px;
     align-items: center;
     font-size: larger;
     cursor: pointer;
     padding-left: 6px;
     border-radius: 6px;
     font-family: 'Times New Roman';
-
 }
 
-    .CoursesListLayout a {
+    .TeacherListLayout a {
         text-decoration: none;
         color: black;
     }
 
-    .CoursesListLayout:hover {
+    .TeacherListLayout:hover {
         background-color: azure;
     }
 
-    .CoursesListLayout .icon {
+    .TeacherListLayout .icon {
         display: none !important;
     }
 
-    .CoursesListLayout:hover .icon {
+    .TeacherListLayout:hover .icon {
         display: block !important;
     }
 
-.courseCode {
-    font-family:Consolas;
+.teacherCode {
     color: blue;
-}
-
-div2{
-    border:1px solid blue;
+    font-family:Consolas;
+    font-size:16px;
 }

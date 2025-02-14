@@ -8,7 +8,7 @@
 
 
 <h5>@Model.Code</h5>
-@Model.Title
+<b>@Model.Title</b>
 <br />
 
 <hr />
@@ -19,7 +19,7 @@
     {
         var registrations = Model.Registrations.Where(r => r.Year == year).OrderBy(r => r.Student.LastName).ThenBy(r => r.Student.FirstName);
         var allocation = JsonDemo.Models.DB.Allocations.ToList().Where(a => a.CourseId == Model.Id && a.Year == year).FirstOrDefault();
-        string teacherName = allocation != null ? allocation.Teacher.Caption : "non attribué";
+        string teacherName = allocation != null ? allocation.Teacher.FullName : "non attribué";
         if (registrations.Count() > 0)
         {
             <details open>

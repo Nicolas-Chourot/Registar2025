@@ -29,6 +29,7 @@ namespace JsonDemo
                      "~/Content/Icons.css",
                      "~/Content/Students.css",
                      "~/Content/Courses.css",
+                     "~/Content/Teachers.css",
                      "~/Content/Selections.css"));
         }
     }

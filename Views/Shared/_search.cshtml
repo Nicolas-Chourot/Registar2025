@@ -3,9 +3,10 @@
     string action = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString().ToLower();
     bool connected = Session["CurrentUser"] != null;
     string dataModel = controller == "students" ? "Étudiant" : "Cours";
-    bool showStudentsSearch = Session["ShowStudentsSearch"] != null ? (bool)Session["ShowStudentsSearch"] : false;
-    bool showCoursesSearch = Session["ShowCoursesSearch"] != null ? (bool)Session["ShowCoursesSearch"] : false;
-    bool showSearch = (action == "index") && ((showStudentsSearch && controller == "students") || (showCoursesSearch && controller == "courses"));
+    bool showStudentsSearch = Session["ShowStudentsSearch"] != null ? (bool)Session["ShowStudentsSearch"] && controller=="students" : false;
+    bool showCoursesSearch = Session["ShowCoursesSearch"] != null ? (bool)Session["ShowCoursesSearch"] && controller == "courses" : false;
+    bool showTeachersSearch = Session["ShowTeachersSearch"] != null ? (bool)Session["ShowTeachersSearch"] && controller == "teachers" : false;
+    bool showSearch = (action == "index") && (showStudentsSearch || showCoursesSearch || showTeachersSearch);
     var yearsList = Session["StudentsYearsList"] != null ? ((List<int>)Session["StudentsYearsList"]).OrderByDescending(i => i) : null;
     var selectedStudentYear = Session["SelectedStudentYear"] != null ? (int)Session["SelectedStudentYear"] : JsonDemo.Models.DB.CurrentDate.Year;
     int index = 1;
@@ -35,6 +36,13 @@
             <div style="display:grid; grid-template-columns:40px auto 50px auto; gap:6px;">
                 <label for="searchToken">Titre </label>
                 <input type="search" name="searchToken" id="searchToken" class="form-control" value="@Session["SearchCourseTitle"]" />
+            </div>
+        }
+        @if (showTeachersSearch)
+        {
+            <div style="display:grid; grid-template-columns:40px auto 50px auto; gap:6px;">
+                <label for="searchToken">Nom </label>
+                <input type="search" name="searchToken" id="searchToken" class="form-control" value="@Session["SearchTeacherName"]" />
             </div>
         }
 

@@ -18,9 +18,9 @@
             {
                 <div class="StudentListLayout">
                     <a href="@Url.Action("Details", new { id = item.Id })">
-                        <div>
+                        <div style="display:flex">
                             <span class="studentCode">@item.Code</span>
-                            @item.LastName @item.FirstName
+                            <div>@item.LastName @item.FirstName</div>
                         </div>
                     </a>
                 </div>

@@ -1,7 +1,7 @@
 ﻿.StudentListLayout {
     display: grid;
-    grid-template-columns: auto 40px 40px;
-    height: 40px;
+    grid-template-columns: auto auto;
+    height: 30px;
     align-items: center;
     font-size: larger;
     cursor: pointer;

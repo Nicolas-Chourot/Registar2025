@@ -1,5 +1,6 @@
 ﻿using JsonDemo.Models;
 using MDB.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -8,6 +9,19 @@ namespace JsonDemo.Controllers
 {
     public class StudentsController : Controller
     {
+        public ActionResult SetYear()
+        {
+            ViewBag.Year = NextSession.Year;
+            ViewBag.Session = NextSession.ValidSessions.Contains(1) ? "Automne" : "Hiver";
+            return View(); 
+        }
+        [HttpPost]
+        public ActionResult SetYear(int year, string session)
+        {
+            DB.CurrentDate = new DateTime(year, (session == "Automne" ? 8 : 1), 15);    
+            return RedirectToAction("Index");
+        }
+
         public ActionResult ToogleSearch()
         {
             Session["ShowStudentsSearch"] = !(bool)Session["ShowStudentsSearch"];
@@ -41,16 +55,16 @@ namespace JsonDemo.Controllers
         public ActionResult Index()
         {
             InitSessionVariables();
-          
+
             string searchName = ((string)Session["SearchStudentName"]).ToLower();
             int selectedYear = (int)Session["SelectedStudentYear"];
-            var students = DB.Students.ToList().OrderByDescending(m=>m.Year).ThenBy(m => m.LastName).ThenBy(m => m.FirstName).ToList();
+            var students = DB.Students.ToList().OrderByDescending(m => m.Year).ThenBy(m => m.LastName).ThenBy(m => m.FirstName).ToList();
 
             if ((bool)Session["ShowStudentsSearch"])
             {
                 if (searchName != "")
                     students = students.Where(s => s.LastName.ToLower().StartsWith(searchName)).ToList();
-                if (selectedYear != 0) 
+                if (selectedYear != 0)
                     students = students.Where(s => s.Year == selectedYear).ToList();
             }
 

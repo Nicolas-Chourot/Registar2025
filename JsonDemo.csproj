@@ -142,6 +142,7 @@
     <Content Include="Content\jquery-ui.theme.css" />
     <Content Include="Content\Selections.css" />
     <Content Include="Content\Students.css" />
+    <Content Include="Content\Teachers.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Logo-Lionel-Groulx.png" />
@@ -202,6 +203,7 @@
     <Content Include="Views\Teachers\Edit.cshtml" />
     <Content Include="Views\Teachers\Index.cshtml" />
     <Content Include="Views\Teachers\TeacherForm.cshtml" />
+    <Content Include="Views\Students\SetYear.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
