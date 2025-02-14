@@ -4,9 +4,10 @@
     flex-flow: row;
     font-family: Courrier,monospace;
     font-size: smaller;
-    border: 1px solid #ccc;
+    /*border: 1px solid #ccc;
     border-radius: 6px;
-    padding: 4px;
+    padding: 4px;*/
+    padding-top : 8px;
     max-width:900px;
 }
 

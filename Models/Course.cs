@@ -37,6 +37,14 @@ namespace JsonDemo.Models
             }
         }
         [JsonIgnore]
+        public List<Allocation> Allocations
+        {
+            get
+            {
+                return DB.Allocations.ToList().Where(r => r.CourseId == Id).ToList();
+            }
+        }
+        [JsonIgnore]
         public List<Student> Students
         {
             get
@@ -65,5 +73,11 @@ namespace JsonDemo.Models
                 foreach (int studentId in selectedStudentsId)
                     DB.Registrations.Add(new Registration { StudentId = studentId, CourseId = Id });
         }
+        public void DeleteAllAllocations()
+        {
+            foreach (Allocation allocation in Allocations)
+                DB.Allocations.Delete(allocation.Id);
+        }
+
     }
 }

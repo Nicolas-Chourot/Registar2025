@@ -10,7 +10,7 @@ namespace JsonDemo.Models
 {
     public class CoursesRepository : Repository<Course>
     {
-        public bool Update(Course course, List<int> selectedStudentsId)
+       /* public bool Update(Course course, List<int> selectedStudentsId)
         {
             BeginTransaction();
             var result = base.Update(course);
@@ -18,6 +18,8 @@ namespace JsonDemo.Models
             EndTransaction();
             return result;
         }
+       */
+
         public override bool Delete(int Id)
         {
             Course course = DB.Courses.Get(Id);
@@ -25,6 +27,7 @@ namespace JsonDemo.Models
             {
                 BeginTransaction();
                 course.DeleteAllRegistrations();
+                course.DeleteAllAllocations();
                 var result = base.Delete(Id);
                 EndTransaction();
                 return result;
