@@ -111,6 +111,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Content Include="App_Assets\Students\no_avatar.png" />
+    <Content Include="App_Assets\Teachers\bc2be815-cd3d-459d-a312-49e60229c80c.jpeg" />
+    <Content Include="App_Assets\Teachers\c00b3008-a41a-4586-a338-1a589256b1bd.jpeg" />
+    <Content Include="App_Assets\Teachers\c7a24783-6cbd-4583-a094-a72f2ac2e389.jpeg" />
+    <Content Include="App_Assets\Teachers\f4e08e66-6485-4c73-b1f8-52edae4f497a.jpeg" />
+    <Content Include="App_Assets\Teachers\fbb51b24-2763-4d30-b175-6a78856ade4b.jpeg" />
+    <Content Include="App_Assets\Teachers\no_avatar.png" />
     <Content Include="Content\Courses.css" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -143,8 +150,10 @@
     <Content Include="Content\Selections.css" />
     <Content Include="Content\Students.css" />
     <Content Include="Content\Teachers.css" />
+    <Compile Include="DAL\ImageAsset.cs" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="App_Assets\Loading_icon.gif" />
     <Content Include="Logo-Lionel-Groulx.png" />
     <Content Include="Scripts\bootbox-custom.js" />
     <Content Include="Scripts\bootbox.js" />
@@ -157,7 +166,7 @@
     <Content Include="App_Data\Teachers.json" />
     <None Include="Properties\PublishProfiles\Registar2025 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\imageUploader.js" />
+    <Content Include="Scripts\imageControl-2.0.js" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

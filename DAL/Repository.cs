@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using JSON_DAL;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.EnterpriseServices;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -16,12 +18,12 @@ namespace JSON_DAL
     // la propriété int Id {get; set;}
     // Après l'instanciation il faut invoquer la méthode Init
     // pour fournir le chemin d'accès du fichier JSON.
+    // 
+    // Tous les membres annotés avec [asset(folder, defaultValue)] 
+    // seront traités en tant que données hors BD
     //
-    // Tous les membres annotés avec [asset] seront traités
-    // en tant que données hors BD
-    //
-    // Author : Nicolas Chourot
-    // date: Janvier 2025
+    // Auteur : Nicolas Chourot
+    // date: Janvier 2024
     ///////////////////////////////////////////////////////////////
     public class Repository<T>
     {
@@ -38,8 +40,9 @@ namespace JSON_DAL
         private string FilePath;
         // Numéro de serie des données
         private string _SerialNumber;
+        // Gestion des images hors données
+        private ImageAsset<T> ImageAsset = new ImageAsset<T>();
         // retourne la valeur de l'attribut attributeName de l'intance data de classe T
-
         private object GetAttributeValue(T data, string attributeName)
         {
             return data.GetType().GetProperty(attributeName).GetValue(data, null);
@@ -53,86 +56,9 @@ namespace JSON_DAL
         private bool AttributeNameExist(string attributeName)
         {
             var instance = Activator.CreateInstance(typeof(T));
+            var type = instance.GetType();
+            var pro = type.GetProperty(attributeName);
             return (instance.GetType().GetProperty(attributeName) != null);
-        }
-        private bool IsBase64Value(string value)
-        {
-            bool isBase64 = value.Contains("data:") && value.Contains(";base64,");
-            return isBase64;
-        }
-        private void DeleteAssets(T data)
-        {
-            var type = data.GetType();
-            foreach (var property in type.GetProperties())
-            {
-                var attribute = property.GetCustomAttribute(typeof(AssetAttribute));
-                if (attribute != null)
-                {
-                    string propName = property.Name;
-                    string value = GetAttributeValue(data, propName).ToString();
-                    string assetToDeletePath = HostingEnvironment.MapPath(value).ToString();
-                    File.Delete(assetToDeletePath);
-                }
-            }
-        }
-        private void HandleAssetMembers(T data)
-        {
-            var type = data.GetType();
-            foreach (var property in type.GetProperties())
-            {
-                var attribute = property.GetCustomAttribute(typeof(AssetAttribute));
-                if (attribute != null)
-                {
-                    string assetsFolder = ((AssetAttribute)attribute).Folder();
-                    string propName = property.Name;
-                    var value = GetAttributeValue(data, propName);
-                    string propValue = value != null ? value.ToString() : "";
-                    T previousStoredData = Get(Id(data));
-                    if (propValue == "")
-                    {
-                        if (previousStoredData != null)
-                        {
-                            SetAttributeValue(data, propName, GetAttributeValue(previousStoredData, propName).ToString());
-                        }
-                    }
-                    else
-                    {
-                        if (IsBase64Value(propValue))
-                        {
-                            if (previousStoredData != null)
-                            {
-                                var previousPropValue = GetAttributeValue(previousStoredData, propName);
-                                if (previousPropValue != null)
-                                {
-                                    string assetToDeletePath = HostingEnvironment.MapPath(previousPropValue.ToString());
-                                    if (File.Exists(assetToDeletePath)) File.Delete(assetToDeletePath);
-                                }
-                            }
-                            string newAssetServerPath;
-                            string[] base64Data = propValue.Split(',');
-                            string extension = base64Data[0].Replace(";base64", "").Split('/')[1];
-                            // Mime patch IIS : does not support webp and avif mimes
-                            if (extension.ToLower() == "webp") extension = "png";
-                            if (extension.ToLower() == "avif") extension = "png";
-                            string assetData = base64Data[1];
-                            string assetUrl;
-                            do
-                            {
-                                var key = Guid.NewGuid().ToString();
-                                assetUrl = assetsFolder + key + "." + extension;
-                                newAssetServerPath = HostingEnvironment.MapPath(assetUrl);
-                                // make sure new file does not already exists 
-                            } while (File.Exists(newAssetServerPath));
-                            SetAttributeValue(data, propName, assetUrl);
-                            var stream = new MemoryStream(Convert.FromBase64String(assetData));
-                            FileStream file = new FileStream(newAssetServerPath, FileMode.Create, FileAccess.Write);
-                            stream.WriteTo(file);
-                            file.Close();
-                            stream.Close();
-                        }
-                    }
-                }
-            }
         }
         // retourne la valeur de l'attribut Id d'une instance de classe T
         private int Id(T data)
@@ -143,56 +69,41 @@ namespace JSON_DAL
         private void ReadFile()
         {
             MarkHasChanged();
-            if (dataList != null)
-            {
-                dataList.Clear();
-            }
+            dataList.Clear();
             try
             {
-                using (StreamReader sr = new StreamReader(FilePath))
-                {
+                using (var sr = new StreamReader(FilePath))
                     dataList = JsonConvert.DeserializeObject<List<T>>(sr.ReadToEnd());
-                }
-                if (dataList == null)
-                {
-                    dataList = new List<T>();
-                }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
+            if (dataList == null)
+                dataList = new List<T>();
         }
         // Mise à jour du fichier JSON avec les données présentes dans la cache dataList
         private void UpdateFile()
         {
-            if (dataList != null)
+            try
             {
-                try
-                {
-                    using (StreamWriter sw = new StreamWriter(FilePath))
-                    {
-                        sw.WriteLine(JsonConvert.SerializeObject(dataList));
-                    }
-                    ReadFile();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                using (var sw = new StreamWriter(FilePath))
+                    sw.WriteLine(JsonConvert.SerializeObject(dataList));
+                ReadFile();
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
         // retourne le prochain Id disponible
         private int NextId()
         {
             int maxId = 0;
-            if (dataList == null)
-                return 1;
             foreach (var data in dataList)
             {
                 int Id = this.Id(data);
-                if (Id > maxId)
-                    maxId = Id;
+                if (Id > maxId) maxId = Id;
             }
             return maxId + 1;
         }
@@ -270,16 +181,13 @@ namespace JSON_DAL
                 }
                 if (!File.Exists(FilePath))
                 {
-                    using (StreamWriter sw = File.CreateText(FilePath))
-                    {
-                        sw.Close();
-                    };
+                    using (StreamWriter sw = File.CreateText(FilePath)) { }
                 }
                 ReadFile();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
             finally
             {
@@ -292,22 +200,12 @@ namespace JSON_DAL
         }
 
         // Méthodes CRUD
-        // Read
-        public T Get(int Id)
-        {
-            foreach (var data in dataList)
-            {
-                int dataId = this.Id(data);
-                if (dataId == Id)
-                    return data;
-            }
-            return default;
-        }
-        public List<T> ToList()
-        {
-            return dataList;
-        }
-        // Create
+
+        // Read all
+        public List<T> ToList() => dataList;
+        // Read one
+        public T Get(int Id) => dataList.Where(d => this.Id(d) == Id).FirstOrDefault();
+        // Create one
         public virtual int Add(T data)
         {
             int newId = 0;
@@ -316,13 +214,13 @@ namespace JSON_DAL
             {
                 newId = NextId();
                 SetAttributeValue(data, "Id", newId);
-                HandleAssetMembers(data);
+                ImageAsset.Update(data);
                 dataList.Add(data);
                 UpdateFile();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
             finally
             {
@@ -330,67 +228,57 @@ namespace JSON_DAL
             }
             return newId;
         }
-        // Update
+        // Update one
         public virtual bool Update(T data)
         {
-            bool success = false;
-            if (!TransactionOnGoing)
-                mutex.WaitOne();
+            if (!TransactionOnGoing) mutex.WaitOne();
             try
             {
                 T dataToUpdate = Get(Id(data));
                 if (dataToUpdate != null)
                 {
-                    int index = dataList.IndexOf(dataToUpdate);
-                    HandleAssetMembers(data);
-                    dataList[index] = data;
+                    ImageAsset.Update(data);
+                    dataList[dataList.IndexOf(dataToUpdate)] = data;
                     UpdateFile();
-                    success = true;
+                    return true;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
             finally
             {
-                if (!TransactionOnGoing)
-                    mutex.ReleaseMutex();
+                if (!TransactionOnGoing) mutex.ReleaseMutex();
             }
-            return success;
+            return false;
         }
-
-
-        // Delete
+        // Delete one
         public virtual bool Delete(int Id)
         {
-            bool success = false;
-            if (!TransactionOnGoing)
-                mutex.WaitOne();
+            if (!TransactionOnGoing) mutex.WaitOne();
             try
             {
                 T dataToDelete = Get(Id);
-
                 if (dataToDelete != null)
                 {
-                    DeleteAssets(dataToDelete);
-                    int index = dataList.IndexOf(dataToDelete);
-                    dataList.RemoveAt(index);
+                    ImageAsset.Delete(dataToDelete);
+                    dataList.RemoveAt(dataList.IndexOf(dataToDelete));
                     UpdateFile();
-                    success = true;
+                    return true;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
             finally
             {
-                if (!TransactionOnGoing)
-                    mutex.ReleaseMutex();
+                if (!TransactionOnGoing) mutex.ReleaseMutex();
             }
-            return success;
+            return false;
         }
+
         #endregion
     }
 }

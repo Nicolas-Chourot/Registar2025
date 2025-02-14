@@ -1,30 +1,25 @@
 ﻿.TeacherListLayout {
     display: grid;
-    grid-template-columns: auto auto;
-    height: 30px;
+    grid-template-columns: 45px 120px auto;
+    height: 44px;
+    text-align: left !important;
     align-items: center;
     font-size: larger;
     cursor: pointer;
     padding-left: 6px;
     border-radius: 6px;
     font-family: 'Times New Roman';
+    text-decoration: none !important;
+    text-decoration: none;
+    color: black;
 }
 
     .TeacherListLayout a {
-        text-decoration: none;
-        color: black;
+       
     }
 
     .TeacherListLayout:hover {
         background-color: azure;
-    }
-
-    .TeacherListLayout .icon {
-        display: none !important;
-    }
-
-    .TeacherListLayout:hover .icon {
-        display: block !important;
     }
 
 .teacherCode {

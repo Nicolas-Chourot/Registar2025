@@ -16,7 +16,7 @@ namespace JsonDemo
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                        "~/Scripts/jquery.validate*",
                        "~/Scripts/jquery-ui.js",
-                       "~/Scripts/imageUploader.js",
+                       "~/Scripts/imageControl-2.0.js",
                        "~/Scripts/selections.js",
                        "~/Scripts/jquery.maskedinput.js",
                        "~/Scripts/SiteScripts.js"));

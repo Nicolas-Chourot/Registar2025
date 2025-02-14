@@ -118,24 +118,15 @@
         </select>
     </div>
 }
-@helper ImageUploader(int modelId, string targetControlId, string imageUrl, string waitingImage = "", string TooltipMessage = "", string ToolTipPlacement = "bottom")
+@helper ImageUploader(string targetControlId, string imageUrl, string TooltipMessage = "")
 {
-    var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
-    imageUrl = Url.Content(imageUrl);
-    waitingImage = Url.Content(waitingImage);
     <div class='imageUploader'
-         id='@modelId'
          controlId='@targetControlId'
          imageSrc='@imageUrl'
-         waitingImage='@waitingImage'
-         data-toggle="tooltip"
-         data-placement="@ToolTipPlacement"
          title="@TooltipMessage">
     </div>
 }
 @helper Image(string url, string cssClass)
 {
-    var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
-    url = Url.Content(url);
     <div class="@cssClass" style="background:url(@url);"></div>
 }

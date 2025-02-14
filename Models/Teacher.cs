@@ -12,6 +12,12 @@ namespace JsonDemo.Models
 
     public class Teacher : Record
     {
+        public const string User_Avatars_Folder = @"/App_Assets/Teachers/";
+        public const string Default_Avatar = @"no_avatar.png";
+
+        [JsonIgnore]
+        public static string DefaultImage { get { return User_Avatars_Folder + Default_Avatar; } }
+
         public Teacher()
         {
             Code = GenerateCode();
@@ -40,6 +46,9 @@ namespace JsonDemo.Models
 
         [Display(Name = "Téléphone"), Required(ErrorMessage = "Obligatoire")]
         public string Phone { get; set; }
+
+        [ImageAsset(User_Avatars_Folder, Default_Avatar)]
+        public string Avatar { get; set; } = DefaultImage;
         [JsonIgnore]
         public double YearsOfService
         {

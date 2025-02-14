@@ -8,13 +8,21 @@
 
 <details>
     <summary><i class="infoIcon fa-solid fa-chalkboard-user"></i> <b> @Model.FirstName @Model.LastName</b> </summary>
-    <br />
-    <h6><i class="infoIcon fa fa-barcode"></i> @Model.Code</h6>
-    <h6><i class="infoIcon fa fa-phone"></i> @Model.Phone</h6>
-    <h6><i class="infoIcon fa fa-paper-plane"></i> <a href="mailto:@Model.Email">@Model.Email</a> </h6>
-    <br />
-    <h6>Embauché le @Model.StartDate.ToLongDateString()</h6>
-    <h6>@Model.YearsOfService.ToString("n1") ans d'ancienneté</h6>
+    <div class="details_layout">
+        <div>
+            <br />
+            <h6><i class="infoIcon fa fa-barcode"></i> @Model.Code</h6>
+            <h6><i class="infoIcon fa fa-phone"></i> @Model.Phone</h6>
+            <h6><i class="infoIcon fa fa-paper-plane"></i> <a href="mailto:@Model.Email">@Model.Email</a> </h6>
+            <br />
+            <h6>Embauché le @Model.StartDate.ToLongDateString()</h6>
+            <h6>@Model.YearsOfService.ToString("n1") ans d'ancienneté</h6>
+        </div>
+        <div>
+            <br />
+            @Helper.Image(Model.Avatar, "largeAvatar")
+        </div>
+    </div>
 </details>
 
 
