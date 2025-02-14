@@ -155,6 +155,7 @@
     <Content Include="App_Code\Helper.cshtml" />
     <Content Include="App_Data\Allocations.json" />
     <Content Include="App_Data\Teachers.json" />
+    <None Include="Properties\PublishProfiles\Registar2025 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\imageUploader.js" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
