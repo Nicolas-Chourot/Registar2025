@@ -53,6 +53,7 @@ namespace JsonDemo.Controllers
             Teacher teacher = DB.Teachers.Get(id);
             if (teacher != null)
             {
+                string d = teacher.StartDate.ToFrenchDateString();
                 Session["id"] = id;
                 Session["code"] = teacher.Code;
                 return View(teacher);

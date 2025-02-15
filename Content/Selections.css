@@ -8,10 +8,10 @@
     border-radius: 6px;
     padding: 4px;*/
     padding-top : 8px;
-    max-width:900px;
 }
 
 .HorSelectionsCMD {
+    margin-right:6px;
     display: flex;
     flex-direction: column;
     min-width: 40px;
@@ -27,6 +27,9 @@
     justify-content: center;
 }
 
+.AddSelection {
+    margin-left:0px;
+}
 .UnselectAll {
     margin: 6px;
 }
