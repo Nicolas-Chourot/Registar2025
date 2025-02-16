@@ -20,13 +20,14 @@
         var registrations = Model.Registrations.Where(r => r.Year == year).OrderBy(r => r.Student.LastName).ThenBy(r => r.Student.FirstName);
         var allocation = JsonDemo.Models.DB.Allocations.ToList().Where(a => a.CourseId == Model.Id && a.Year == year).FirstOrDefault();
         string teacherName = allocation != null ? allocation.Teacher.FullName : "non attribué";
+        string detailsTeacherUrl = allocation != null ? "/Teachers/Details/" + allocation.Teacher.Id : "#";
         if (registrations.Count() > 0)
         {
             <details open>
-                <summary>Cohorte @year - @teacherName</summary>
+                <summary>Cohorte @year - <a href="@detailsTeacherUrl" class="TeacherLink" title="Voir détails">@teacherName</a></summary>
                 @foreach (var registration in registrations)
                 {
-                    <div class="StudentListLayout ellipsis">
+                    <div class="CoursesListLayout ellipsis">
                         <a href="@Url.Action("Details", "Students", new {id = registration.Student.Id})">
                             <div>
                                 <span class="studentCode">@registration.Student.Code</span>
