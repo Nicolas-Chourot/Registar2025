@@ -52,9 +52,7 @@
                         @if (!connected)
                         {
                             <div class="dropdown-item">
-                                <a href="/Accounts/Login" class="noDecoration">
-                                    <i class="menuIcon fa fa-sign-in mx-2"></i> Connexion...
-                                </a>
+                               <i class="menuIcon fa fa-sign-in mx-2"></i> Connexion...
                             </div>
                         }
                         <div class="dropdown-divider"></div>
@@ -108,7 +106,7 @@
         case "about":
             <div class="actionTitle">À propos </div>
             <div class="menu-icon-layout">
-                <a href="/@controller/index" class="cmdIcon fa fa-times" title="Fermer"></a>
+                <i onclick="history.back()" class="cmdIcon fa fa-times" title="Fermer"></i>
             </div>
             break;
     }
