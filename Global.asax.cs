@@ -16,6 +16,10 @@ namespace JsonDemo
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            
+        }
+        protected void Session_Start()
+        {
             Session["CurrentDate"] = DateTime.Now.Year;
         }
     }
