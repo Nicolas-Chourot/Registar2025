@@ -18,7 +18,7 @@ namespace JsonDemo.Controllers
         [HttpPost]
         public ActionResult SetYear(int year, string session)
         {
-            DB.CurrentDate = new DateTime(year, (session == "Automne" ? 8 : 1), 15);    
+            NextSession.CurrentDate = new DateTime(year, (session == "Automne" ? 8 : 1), 15);    
             return RedirectToAction("Index");
         }
 

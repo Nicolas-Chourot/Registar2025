@@ -17,7 +17,7 @@ namespace JsonDemo.Models
         }
         private static string GenerateCode()
         {
-            string code = DB.CurrentDate.Year.ToString();
+            string code = NextSession.CurrentDate.Year.ToString();
             Random rnd = new Random();
             for (int i = 0; i < 5; i++) code += rnd.Next(0, 9).ToString();
             return code;

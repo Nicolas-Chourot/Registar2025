@@ -21,14 +21,15 @@ namespace JsonDemo.Models
                 return instance;
             }
         }
+        public static DateTime CurrentDate = DateTime.Now;
 
         static public List<int> ValidSessions
         {
             get
             {
                 List<int> result = new List<int>();
-                if (DB.CurrentDate.Month > January && 
-                    DB.CurrentDate.Month <= August)
+                if (CurrentDate.Month > January && 
+                    CurrentDate.Month <= August)
                 {
                     result.Add(1);
                     result.Add(3);
@@ -48,9 +49,9 @@ namespace JsonDemo.Models
         {
             get
             {
-                int value = DB.CurrentDate.Year;
-                if (DB.CurrentDate.Month > August && 
-                    DB.CurrentDate.Month <= 12) value++;
+                int value = CurrentDate.Year;
+                if (CurrentDate.Month > August && 
+                    CurrentDate.Month <= 12) value++;
                 return value;
             }
         }

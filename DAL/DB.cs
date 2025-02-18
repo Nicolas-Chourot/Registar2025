@@ -5,7 +5,6 @@ namespace JsonDemo.Models
 {
     public sealed class DB
     {
-        public static DateTime CurrentDate = new DateTime(2025, 2, 15);
         #region singleton setup
         private static readonly DB instance = new DB();
         public static DB Instance { 

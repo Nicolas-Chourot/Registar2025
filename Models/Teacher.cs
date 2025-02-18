@@ -22,7 +22,7 @@ namespace JsonDemo.Models
         {
             Code = GenerateCode();
             Phone = "(450) 430-3120 poste 00000";
-            StartDate = DB.CurrentDate;
+            StartDate = NextSession.CurrentDate;
         }
         private static string GenerateCode()
         {
@@ -54,7 +54,7 @@ namespace JsonDemo.Models
         {
             get
             {
-                double now = DB.CurrentDate.Year + Math.Round(DB.CurrentDate.Month / 12.0 * 10.0) / 10.0;
+                double now = NextSession.CurrentDate.Year + Math.Round(NextSession.CurrentDate.Month / 12.0 * 10.0) / 10.0;
                 double sdt = StartDate.Year + Math.Round(StartDate.Month / 12.0 * 10.0) / 10.0;
                 return now - sdt;
             }
