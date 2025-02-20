@@ -41,6 +41,7 @@ namespace JsonDemo.Models
         [Display(Name = "Prénom"), Required(ErrorMessage = "Obligatoire")]
         public string FirstName { get; set; }
 
+        [Remote("NameAvailable", "Teachers", AdditionalFields = "FirstName", HttpMethod = "POST", ErrorMessage = "Ce nom est déjà utilisé.")]
         [Display(Name = "Nom"), Required(ErrorMessage = "Obligatoire")]
         public string LastName { get; set; }
 

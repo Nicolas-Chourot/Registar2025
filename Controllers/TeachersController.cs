@@ -32,6 +32,21 @@ namespace JsonDemo.Controllers
             Session["StudentsYearsList"] = DB.Students.YearsList;
         }
 
+        [HttpPost]
+        public JsonResult NameAvailable(string LastName, string FirstName)
+        {
+            int Id = Session["CurrentId"] != null ? (int)Session["CurrentId"] : 0;
+            bool available = false;
+            Teacher teacher = 
+                DB.Teachers.ToList().Where(
+                    t => 
+                    t.Id != Id &&
+                    t.FirstName.ToLower() == FirstName.ToLower() &&
+                    t.LastName.ToLower() == LastName.ToLower()).FirstOrDefault();
+            if (teacher != null) available = false;
+            return Json(available);
+        }
+
         public ActionResult Index()
         {
             InitSessionVariables();
