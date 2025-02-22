@@ -43,6 +43,7 @@
                 {
                     <div class="CoursesListLayout ellipsis">
                         <a href="@Url.Action("Details", "Courses", new { id = allocation.Course.Id })">
+                            <span style="color:gray">[@allocation.Course.Session] </span>
                             <span class="courseCode">@allocation.Course.Code</span>
                             @allocation.Course.Title
                         </a>

@@ -30,6 +30,7 @@
                 {
                     <div class="CoursesListLayout ellipsis">
                         <a href="@Url.Action("Details", "Courses", new { id = registration.Course.Id })">
+                            <span style="color:gray">[@registration.Course.Session] </span>
                             <span class="courseCode">@registration.Course.Code</span>
                             @registration.Course.Title
                         </a>

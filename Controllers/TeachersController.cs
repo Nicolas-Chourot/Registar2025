@@ -35,8 +35,8 @@ namespace JsonDemo.Controllers
         [HttpPost]
         public JsonResult NameAvailable(string LastName, string FirstName)
         {
-            int Id = Session["CurrentId"] != null ? (int)Session["CurrentId"] : 0;
-            bool available = false;
+            int Id = Session["Id"] != null ? (int)Session["Id"] : 0;
+            bool available = true;
             Teacher teacher = 
                 DB.Teachers.ToList().Where(
                     t => 
@@ -96,9 +96,8 @@ namespace JsonDemo.Controllers
             if (teacher != null)
             {
                 ViewBag.Allocations = teacher.NextSessionCoursesToSelectList;
-                // Todo prevent from allocatation of 2 teachers on at the same next session course
                 ViewBag.Courses = DB.Courses.NextSessionUnAllocatedToSelectList;
-                return View(DB.Teachers.Get(id));
+                return View(teacher);
             }
             return RedirectToAction("Index");
         }
@@ -114,7 +113,6 @@ namespace JsonDemo.Controllers
 
             }
             ViewBag.Allocations = teacher.NextSessionCoursesToSelectList;
-            // Todo prevent from allocatation of 2 teachers on at the same next session course
             ViewBag.Courses = DB.Courses.NextSessionUnAllocatedToSelectList;
             return View(teacher);
         }

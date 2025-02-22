@@ -26,7 +26,7 @@ namespace JsonDemo.Models
         [JsonIgnore]
         public string Caption
         {
-            get { return Code + " " + Title; }
+            get { return "[" + Session + "] " + Code + " " + Title; }
         }
         [JsonIgnore]
         public List<Registration> Registrations
@@ -59,7 +59,7 @@ namespace JsonDemo.Models
         }
         public bool IsAllocated(int year)
         {
-            return DB.Allocations.ToList().Where(a => a.Year == year && a.CourseId == Id).Any(); 
+            return DB.Allocations.ToList().Where(a => a.Year == year && a.CourseId == Id).Any();
         }
         public void DeleteAllRegistrations()
         {

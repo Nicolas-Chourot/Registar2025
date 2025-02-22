@@ -19,7 +19,7 @@
     @foreach (int year in yearsList)
     {
         var registrations = Model.Registrations.Where(r => r.Year == year).OrderBy(r => r.Student.LastName).ThenBy(r => r.Student.FirstName);
-        var allocation = JsonDemo.Models.DB.Allocations.ToList().Where(a => a.CourseId == Model.Id && a.Year == year).FirstOrDefault();
+        var allocation = Model.Allocations.ToList().Where(a => a.Year == year).FirstOrDefault();
         string teacherName = allocation != null ? allocation.Teacher.FullName : "non attribué";
         string detailsTeacherUrl = allocation != null ? "/Teachers/Details/" + allocation.Teacher.Id : "#";
         if (registrations.Count() > 0)

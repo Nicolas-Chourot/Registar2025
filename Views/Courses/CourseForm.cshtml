@@ -8,8 +8,6 @@
 
 @using (Html.BeginForm())
 {
-    @Html.HiddenFor(model => model.Id)
-
     @Html.AntiForgeryToken()
 
     <div>
