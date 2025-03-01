@@ -26,6 +26,9 @@ namespace JsonDemo.Controllers
 
             if (Session["SearchCourseTitle"] == null)
                 Session["SearchCourseTitle"] = "";
+
+            if (Session["StudentsYearsList"] == null)
+                Session["StudentsYearsList"] = DB.Students.YearsList;
         }
         public ActionResult Index()
         {

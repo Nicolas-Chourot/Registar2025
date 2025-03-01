@@ -49,7 +49,8 @@ namespace JsonDemo.Controllers
             if (Session["SelectedStudentYear"] == null)
                 Session["SelectedStudentYear"] = 0; // all years
 
-            Session["StudentsYearsList"] = DB.Students.YearsList;
+            if (Session["StudentsYearsList"] == null)
+                Session["StudentsYearsList"] = DB.Students.YearsList;
         }
 
         public ActionResult Index()

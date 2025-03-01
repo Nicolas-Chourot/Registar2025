@@ -10,7 +10,9 @@ namespace JsonDemo.Models
 {
     public class CoursesRepository : Repository<Course>
     {
-       /* public bool Update(Course course, List<int> selectedStudentsId)
+       /* 
+        * This feature was removed
+        public bool Update(Course course, List<int> selectedStudentsId)
         {
             BeginTransaction();
             var result = base.Update(course);

@@ -29,7 +29,8 @@ namespace JsonDemo.Controllers
             if (Session["SearchTeacherName"] == null)
                 Session["SearchTeacherName"] = "";
 
-            Session["StudentsYearsList"] = DB.Students.YearsList;
+            if (Session["StudentsYearsList"] == null)
+                Session["StudentsYearsList"] = DB.Students.YearsList;
         }
 
         [HttpPost]
