@@ -66,6 +66,7 @@ namespace JsonDemo.Models
             foreach (Registration registration in Registrations)
                 DB.Registrations.Delete(registration.Id);
         }
+        /*
         public void UpdateRegistrations(List<int> selectedStudentsId)
         {
             DeleteAllRegistrations();
@@ -73,6 +74,7 @@ namespace JsonDemo.Models
                 foreach (int studentId in selectedStudentsId)
                     DB.Registrations.Add(new Registration { StudentId = studentId, CourseId = Id });
         }
+        */
         public void DeleteAllAllocations()
         {
             foreach (Allocation allocation in Allocations)
