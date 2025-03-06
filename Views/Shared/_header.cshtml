@@ -2,14 +2,14 @@
     string controller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower();
     string action = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString().ToLower();
     bool connected = Session["CurrentUser"] != null;
-    string dataModel = controller == "students" ? "Étudiant" : "Cours";
+    string dataModel = "";
     switch (controller)
     {
         case "students": dataModel = "Étudiant"; break;
         case "courses": dataModel = "Cours"; break;
         case "teachers": dataModel = "Prof"; break;
     }
-    }
+}
 <div id="header">
     <img src="/Logo-Lionel-Groulx.png" class="appLogo" alt="" title="Régistraire">
 
@@ -52,13 +52,13 @@
                         @if (!connected)
                         {
                             <div class="dropdown-item">
-                               <i class="menuIcon fa fa-sign-in mx-2"></i> Connexion...
+                                <i class="menuIcon fa fa-sign-in mx-2"></i> Connexion...
                             </div>
                         }
                         <div class="dropdown-divider"></div>
                         <div class="dropdown-item">
                             <a href="/Students/SetYear" class="noDecoration">
-                                <i class="menuIcon fa fa-calendar mx-2"></i> Année courante...
+                                <i class="menuIcon fa fa-calendar mx-2"></i> Session courante : @JsonDemo.Models.NextSession.ShortCaption...
                             </a>
                         </div>
                         <div class="dropdown-item">
@@ -96,7 +96,7 @@
             </div>
             break;
         case "setyear":
-            <div class="actionTitle">Année courrante </div>
+            <div class="actionTitle">Session courrante </div>
             <div class="menu-icon-layout">
                 <i class="cmdIcon submitCmd fa fa-check" title="Soumettre"></i>
                 <a href="/@controller/index" class="cmdIcon fa fa-times" title="Fermer"></a>

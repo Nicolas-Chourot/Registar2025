@@ -55,11 +55,18 @@ namespace JsonDemo.Models
                 return value;
             }
         }
+        static public string ShortCaption
+        {
+            get
+            {
+                return (ValidSessions.Contains(1) ? "Automne " : "Hiver ") + Year;
+            }
+        }
         static public string Caption
         {
             get
             {
-                return "session " + (ValidSessions.Contains(1) ? " d'automne " : " d'hiver ") + Year;
+                return "Session " + (ValidSessions.Contains(1) ? " d'automne " : " d'hiver ") + Year;
             }
         }
     }
